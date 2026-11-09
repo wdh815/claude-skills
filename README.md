@@ -8,7 +8,7 @@
 
 | 구분 | 개수 | 위치 |
 |---|---|---|
-| 1. 직접 만든 스킬 | 2 | `~/.claude/skills/<이름>/SKILL.md` |
+| 1. 직접 만든 스킬 | 3 | `~/.claude/skills/<이름>/SKILL.md` |
 | 2. claude.ai 동기화 스킬 (anthropic-skills) | 9 | claude.ai 계정에서 동기화 |
 | 3. 플러그인 스킬 | 16 | 설치한 플러그인 (productivity, data, cowork-plugin-management) |
 | 4. 기본 제공 스킬 | 16 | Claude Code 내장 |
@@ -21,6 +21,7 @@
 |---|---|---|
 | `ipynb-explain` | `.ipynb` 노트북의 설명자료·해설·정리 문서를 만들 때 | 노트북과 같은 폴더에 `<노트북이름>_설명.md` |
 | `lecture-outline` | 강의자료(PDF·PPTX·DOCX)를 목차·흐름·개념·내용으로 정리할 때 | 원본과 같은 폴더에 `<원본명>_목차.md` |
+| `md-to-pdf` | md 파일을 출력·공유하기 좋은 PDF로 바꿀 때 | 원본과 같은 폴더에 `<원본명>.pdf` (A4) |
 
 ### 1.1 ipynb-explain
 - **요청 예시**: "이 노트북 설명자료 만들어줘", `/ipynb-explain 실습3.ipynb`
@@ -31,6 +32,14 @@
 - **요청 예시**: "3. Deep Neural Network.pdf 목차 정리해줘", `/lecture-outline 강의자료.pdf`
 - **문서 구성**: Part 1. 층위별 세부 목차 → Part 2. 목차별 흐름 → Part 3. 목차별 핵심 개념 → Part 4. 목차별 내용 → (부록) 한 장 요약표
 - **원칙**: 원본 구조를 유지하고, 원본의 오류를 바로잡거나 내용을 보충하면 `※`·`(보충)`으로 표시함
+
+### 1.3 md-to-pdf
+- **요청 예시**: "이 md 파일 pdf로 만들어줘", `/md-to-pdf 3. Deep Neural Network_목차.md`
+- **구성 파일**: `SKILL.md`, `md2pdf.py`(변환 스크립트), `style.css`(인쇄용 스타일)
+- **방식**: pandoc으로 md → HTML 변환(수식은 MathML) → Chrome/Edge headless로 A4 PDF 인쇄
+- **옵션**: `--toc`(앞에 목차 페이지), `--page-break`(`#` 제목마다 새 페이지)
+- **특징**: 수식·표·코드·한글이 깨지지 않음, 표 머리글 반복, `<details>`는 펼쳐서 인쇄
+- **필요한 프로그램**: pandoc, Chrome 또는 Edge
 
 ---
 
